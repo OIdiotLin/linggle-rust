@@ -1,0 +1,10 @@
+[package]
+name = "linggle-rust"
+version = "0.1.0"
+authors = ["H.D. Lin <oidiotlin@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+reqwest = "^0.9"
+lazy_static = "1.3.0"
+serde = "1.0.92"
