@@ -38,7 +38,6 @@ pub fn get_csrf_token() -> Option<linggle::CSRF> {
 }
 
 pub fn set_csrf_token(token: &linggle::CSRF) {
-    println!("storage::set_csrf_token: token: {:?}", &token);
     db.kv_store("csrf_token", &token.csrf_token);
     db.kv_store("expires", &token.expires.to_rfc2822());
 }
