@@ -14,22 +14,22 @@ type Timestamp = i64;
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct LinggleRequest {
-    query: String,
-    time: Timestamp,
+    pub query: String,
+    pub time: Timestamp,
 }
 
 #[derive(Deserialize, Debug)]
 pub struct NGram {
-    text: String,
-    count: usize,
+    pub text: String,
+    pub count: usize,
 }
 
 #[derive(Deserialize, Debug)]
 pub struct LinggleResult {
-    query: String,
-    time: Timestamp,
-    total: usize,
-    ngrams: Vec<NGram>,
+    pub query: String,
+    pub time: Timestamp,
+    pub total: usize,
+    pub ngrams: Vec<NGram>,
 }
 
 #[derive(Deserialize, Debug)]
