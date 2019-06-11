@@ -3,8 +3,8 @@ use chrono::{DateTime, Utc};
 use super::linggle;
 
 lazy_static! {
-    static ref token_cached: Option<linggle::CSRF> = get_csrf_token();
-    static ref db: UnQLite = UnQLite::create(db_path());
+    static ref TOKEN_CACHED: Option<linggle::CSRF> = get_csrf_token();
+    static ref DB: UnQLite = UnQLite::create(db_path());
 }
 
 fn db_path() -> String {
@@ -14,7 +14,7 @@ fn db_path() -> String {
 }
 
 pub fn get_csrf_token() -> Option<linggle::CSRF> {
-    match db.kv_fetch("expires") {
+    match DB.kv_fetch("expires") {
         Ok(expires) => {
             let expires: DateTime<Utc> = DateTime::parse_from_rfc2822(std::str::from_utf8(&expires).unwrap()).unwrap().with_timezone(&Utc);
             if expires.timestamp_millis() < Utc::now().timestamp_millis() {   // expired!
@@ -23,12 +23,12 @@ pub fn get_csrf_token() -> Option<linggle::CSRF> {
                 return Some(csrf);
             } else {
                 return Some(linggle::CSRF {
-                    csrf_token: std::str::from_utf8(&db.kv_fetch("csrf_token").unwrap()).unwrap().to_string(),
+                    csrf_token: std::str::from_utf8(&DB.kv_fetch("csrf_token").unwrap()).unwrap().to_string(),
                     expires,
                 });
             }
         }
-        Err(e) => {
+        Err(_e) => {
             let csrf = linggle::get_csrf().unwrap();
             set_csrf_token(&csrf);
             return Some(csrf);
@@ -38,8 +38,8 @@ pub fn get_csrf_token() -> Option<linggle::CSRF> {
 }
 
 pub fn set_csrf_token(token: &linggle::CSRF) {
-    db.kv_store("csrf_token", &token.csrf_token);
-    db.kv_store("expires", &token.expires.to_rfc2822());
+    DB.kv_store("csrf_token", &token.csrf_token).ok();
+    DB.kv_store("expires", &token.expires.to_rfc2822()).ok();
 }
 
 #[cfg(test)]
