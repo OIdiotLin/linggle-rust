@@ -1,0 +1,22 @@
+language: rust
+branches:
+  only:
+    - master
+    - develop
+rust:
+  - nightly
+#addons:
+#  ssh_known_hosts:
+#    - gz.oidiotlin.com
+cache:
+  - cargo
+#before_install:
+#  - openssl aes-256-cbc -K $encrypted_636ecf99567c_key -iv $encrypted_636ecf99567c_iv -in aur-travis.enc -out aur-travis -d
+#  - eval "$(ssh-agent -s)"
+#  - chmod 600 aur-travis
+#  - ssh-add aur-travis
+script:
+  - cargo build --release
+  - cargo test --release
+#deploy:
+#  - git clone ssh://aur@aur.archlinux.org/linggle-git.git
