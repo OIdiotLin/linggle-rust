@@ -4,8 +4,10 @@ extern crate reqwest;
 extern crate dirs;
 extern crate chrono;
 extern crate clap;
+extern crate colored;
 
 use clap::{App, Arg};
+use colored::*;
 
 mod linggle;
 mod storage;
@@ -24,10 +26,9 @@ fn main() {
     let query = matches.value_of("query").unwrap();
     let result = linggle::query(query).unwrap();
     for (idx, ngram) in result.ngrams.iter().enumerate() {
-        println!("{index:>2}. ({count}|{percent:.2}%) {text}",
-                 index = idx + 1,
-                 text = ngram.text,
-                 count = ngram.count,
-                 percent = 100_f32 * ngram.count as f32 / result.total as f32);
+        let index = format!("{:>2}.", idx + 1).as_str().yellow();
+        let count =format!("{}", ngram.count).as_str().magenta();
+        let percent = format!("{:.2}%", 100_f32 * ngram.count as f32 / result.total as f32).as_str().blue();
+        println!("{} {}|{} \t{}", index, count, percent, ngram.text);
     }
 }
