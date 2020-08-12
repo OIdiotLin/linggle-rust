@@ -1,5 +1,11 @@
 # linggle-rust
 
+**SAD NEWS: THIS SERVICE IS UNAVAILABLE NOW**
+
+**SAD NEWS: THIS SERVICE IS UNAVAILABLE NOW**
+
+**SAD NEWS: THIS SERVICE IS UNAVAILABLE NOW**
+
 <div align="center"><img src="https://linggle.com/static/img/linggle-logo.png" /></div>
 
 [![Build Status](https://travis-ci.org/OIdiotLin/linggle-rust.svg?branch=master)](https://travis-ci.org/OIdiotLin/linggle-rust)
